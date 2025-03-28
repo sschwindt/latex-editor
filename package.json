@@ -1,0 +1,13 @@
+{
+  "name": "latex-editor",
+  "version": "1.0.0",
+  "description": "Single-File LaTeX Editor with CodeMirror",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^25.3.1"
+  }
+}
+

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Electron LaTeX Editor (Single Add Comment)</title>
+
+  <!-- CodeMirror CSS (CDN) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/codemirror@5.65.9/lib/codemirror.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/codemirror@5.65.9/theme/eclipse.min.css"
+  />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: sans-serif;
+    }
+    #menuBar {
+      background: #eee;
+      border-bottom: 1px solid #ccc;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #menuBar button {
+      cursor: pointer;
+    }
+    #editorContainer {
+      display: flex;
+      width: 100%;
+      height: calc(100% - 40px); /* 40px for the menu bar area */
+      overflow: hidden;
+    }
+    /* Editor starts at 60% width, with a min of 200px */
+    #editor {
+      width: 60%;
+      min-width: 200px;
+      border-right: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+    }
+    .CodeMirror {
+      flex: 1 1 auto;
+      width: 100%;
+      height: 100%;
+    }
+    /* The draggable bar between editor and comments */
+    #resizer {
+      width: 5px;
+      cursor: col-resize;
+      background-color: #ddd;
+    }
+    /* The comments pane (fills the rest) */
+    #commentsPane {
+      flex: 1;
+      min-width: 150px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    .commentItem {
+      background: #f3f3f3;
+      margin-bottom: 5px;
+      padding: 5px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+    }
+    .highlight-inserted {
+      background-color: #c1f0c1;
+    }
+    .highlight-deleted {
+      background-color: #f0c1c1;
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="menuBar">
+    <!-- Basic File Buttons -->
+    <button onclick="newFile()">New</button>
+    <button onclick="openTexFile()">Open .tex</button>
+    <button onclick="saveTexFile()">Save .tex</button>
+    <button onclick="openProjectFile()">Open Project</button>
+    <button onclick="saveProjectFile()">Save Project</button>
+
+    <!-- Track Changes -->
+    <button onclick="toggleTrackChanges()">Track Changes: Off</button>
+
+    <!-- Single "Add Comment" button -->
+    <button onclick="addComment()">Add Comment</button>
+
+    <!-- Stub compile -->
+    <button onclick="compileTex()">Compile</button>
+  </div>
+
+  <div id="editorContainer">
+    <div id="editor"></div>
+    <div id="resizer"></div>
+    <div id="commentsPane">
+      <h3>Comments</h3>
+      <div id="commentsList"></div>
+    </div>
+  </div>
+
+  <!-- CodeMirror JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.9/lib/codemirror.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.9/mode/stex/stex.min.js"></script>
+
+  <!-- Our Renderer JS -->
+  <script src="renderer.js"></script>
+</body>
+</html>
+
